@@ -11,10 +11,12 @@
     <button id="btn" type="button"> Click Me</button>
     <script>
         const helloBtn = document.querySelector('#btn')
-        helloBtn.onclick = function() {
-                alert("Hello World!")
-        }
-        
+        // helloBtn.onclick = function() {
+        //         alert("Hello World!")
+        // }
+        helloBtn.addEventListener('click', function() {
+            allert("Hello Coding")
+        }, false)
         // function sayHello() {
         //     alert("Hello World!")
         // }
