@@ -4,7 +4,16 @@ const monthGR = ['Ιανουαρίου', 'Φεβρουαρίου' , 'Απριλ�
 let notes = []
 let count = []
 
-window.addEventListener('DOMContentLoaded', function()) {
+window.addEventListener('DOMContentLoaded', function() {
+
+    this.setInterval(() => printGrDate(), 1000)
+    this.document.querySelector('#addNoteBtn').addEventListener('click', function() {
+        onInsertHandler({key: count + 1 , note: document.querySelector('#inputNote').value.trim(), softDeleted: false})
+    })
     
-    this.
-}
+    this.document.querySelector('#inputNote').addEventListener('keyup' , function() {
+        if (e.key === 'Enter') {
+            onInsertHandler({key: count + 1 , note: e.target.value.trim(), softDeleted: false})
+        }
+    })
+})
