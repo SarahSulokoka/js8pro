@@ -40,3 +40,8 @@ function printGrDate() {
     document.querySelector('#dateTxt').innerHTML = `${dateStr}<br>${timeStr}`
 }
 
+function onInsertHandler(data) {
+    if (!data?.note) {
+        
+    }
+}
