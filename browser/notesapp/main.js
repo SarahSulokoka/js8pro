@@ -30,18 +30,62 @@ function printGrDate() {
     const seconds = currentDate.getSeconds()
 
     const dayStr = daysGR[day]
-    const monthStr = daysGR[month]
+    const monthStr = monthsGR[month]
 
-    const dateStr = `${dayStr}, ${date}, ${monthStr}, ${year}`
-    const timeStr = `${(hours < 10) ? '0' : ' '}${hours} 
-                    :${(minutes < 10) ? '0' : ' '}${minutes}
-                    :${(seconds < 10) ? '0' : ' '}${seconds}`
+    const dateStr = `${dayStr}, ${date} ${monthStr} ${year}`
+    const timeStr = `${(hours < 10) ? '0': ''}${hours}:${(minutes < 10) ? '0': ''}${minutes}:${(seconds < 10) ? '0': ''}${seconds}`
 
     document.querySelector('#dateTxt').innerHTML = `${dateStr}<br>${timeStr}`
 }
 
-function onInsertHandler(data) {
-    if (!data?.note) {
-        
-    }
+// Controller
+function onInsertHandler(obj) {
+    if (!obj?.note) return
+
+    insertNote(obj)
+    reset()
 }
+
+
+// Model
+function insertNote(obj) {
+    notes = [...notes, obj]
+    count++
+    renderNotes()
+}
+
+// View
+function renderNotes() {
+    const container = document.querySelector('#notesWrapper')
+
+    container.innerHTML = notes.map(note => `<div id="${'noteTemplate' + note.key}" class="flex justify-between items-center px-[2px] border-b border-black">
+            <div id="${'noteInfo' + note.key}"  class="flex items-center">
+                <input type="checkbox" id="${'noteCheck' + note.key}" onclick="strikeThrough(${note.key})" class="w-[25px] h-[25px] mr-[5px]" ${note.softDeleted ? 'checked' : ''}>
+                <label id="${'noteTxt' + note.key}" for="${'noteCheck' + note.key}" class="w-[200px] max-h-[100px] overflow-hidden break-words whitespace-normal text-base ${note.softDeleted ? 'line-through text-gray-500' : ''}">${note.note}</label>
+            </div>
+            <button type="button" id="${'noteDelBtn' + note.key}" class="w-[35px] h-[35px] border border-black rounded-full" onclick="deleteNote(${note.key})">X</button>
+        </div>`).join("")
+}
+
+// Model
+function strikeThrough(key) {
+    notes = notes.map(note => note.key === key ? {...note, softDeleted: !note.softDeleted} : {...note})
+    renderNotes()
+}
+
+function deleteNote(key) {
+    notes = notes.filter(note => note.key !== key)
+    renderNotes()
+}
+
+
+// View
+function reset() {
+    document.querySelector('#inputNote').value = ''
+}
+
+
+
+
+
+
