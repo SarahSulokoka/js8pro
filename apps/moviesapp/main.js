@@ -23,7 +23,9 @@ function fetchMovieFromApi(title) {
     .then(response => {
         handleResults(response.data)
     })
-    .catch(error => console.error('Error: ' + error))
+    .catch(error => { console.error('Error: ' + error)
+        onApiError()
+    })
 }
 
 function handleResults(data) {
@@ -42,3 +44,46 @@ function onBeforeSend() {
     hideComponent('#notFound')
     hideComponent('#error')
 } 
+
+function onApiError() {
+    hideComponent('#waiting')
+    showComponent('#error')
+}
+
+function onShowMoreClicked() {
+    $('.extended').slideToggle(1000)
+}
+
+function showComponent(component) {
+    return $(component.removeClass)('hidden')
+
+}
+
+function hideComponent(component) {
+    return $(component).addClass('hidden')
+}
+ function render(data) {
+    const imdbURL = `https://www.imdb.com/title/${data.imdbID}`
+    const imdbLink = document.getElementById('#imdbid')
+    imdbLink.href = imdbURL
+
+    document.getElementById('title').textContent = data.Title
+    document.getElementById('year').textContent = `Release date: ${data.Year}`
+    document.getElementById('runtime').textContent = `Duration: ${data.Runtime}`
+    document.getElementById('genre').textContent = `Genre: ${data.Genre}`
+    document.getElementById('plot').textContent = data.Plot
+    document.getElementById('director').querySelector(span).textContent = data.Director
+    document.getElementById('actors').querySelector(span).textContent = data.Actors
+    document.getElementById('production').querySelector(span).textContent = data.Production
+    document.getElementById('boxOffice').querySelector(span).textContent = data.BoxOffice
+    document.getElementById('language').querySelector(span).textContent = data.Language
+    document.getElementById('rated').querySelector(span).textContent = data.Rated
+
+    const post = document.getElementById('image')
+    poster.src = data.Poster
+    poster.alt = data.Title
+
+    document.querySelector('#movie').
+ }
+
+
